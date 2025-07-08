@@ -57,7 +57,7 @@ export default function SingletonPage() {
     return ToastManager.instance;
   }
   show(message: string) {
-    alert("Toast: " + message);
+    toast.success(message);; // import toast from "react-hot-toast";
   }
 }`}
       </SyntaxHighlighter>
