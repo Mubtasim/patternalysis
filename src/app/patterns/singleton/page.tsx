@@ -3,7 +3,7 @@
 import PatternLayout from "@/components/PatternLayout";
 import toast from "react-hot-toast";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 class ToastManager {
   private static instance: ToastManager;
@@ -46,7 +46,7 @@ export default function SingletonPage() {
         Show Toast (Singleton)
       </button>
 
-      <SyntaxHighlighter language="ts" style={dark} className="rounded">
+      <SyntaxHighlighter language="ts" style={atomDark} className="rounded">
         {`class ToastManager {
   private static instance: ToastManager;
   private constructor() {}
