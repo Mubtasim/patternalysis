@@ -41,28 +41,25 @@ export default function Home() {
           patterns — simplified for frontend engineers.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {allPatterns.map((name) => {
             const isImplemented = implementedPatterns.includes(name);
-            return (
+            const label = name.replace(/-/g, " ");
+
+            return isImplemented ? (
+              <Link
+                key={name}
+                href={`/patterns/${name}`}
+                className="block p-4 h-20 flex items-center justify-center rounded-lg border bg-zinc-900 text-white border-zinc-700 hover:border-indigo-500 hover:bg-zinc-800 transition-all text-base font-medium tracking-wide"
+              >
+                {label}
+              </Link>
+            ) : (
               <div
                 key={name}
-                className={`p-5 h-28 flex items-center justify-center rounded-xl border transition-all text-base font-medium tracking-wide ${
-                  isImplemented
-                    ? "bg-zinc-900 text-white border-zinc-700 hover:border-indigo-500 hover:bg-zinc-800"
-                    : "bg-zinc-900 text-zinc-500 border-zinc-800 cursor-not-allowed"
-                }`}
+                className="p-4 h-20 flex items-center justify-center rounded-lg border bg-zinc-900 text-zinc-500 border-zinc-800 cursor-not-allowed text-base font-medium tracking-wide gap-1"
               >
-                {isImplemented ? (
-                  <Link href={`/patterns/${name}`} className="hover:underline">
-                    {name.replace(/-/g, " ")}
-                  </Link>
-                ) : (
-                  <span>
-                    {name.replace(/-/g, " ")}{" "}
-                    <span className="text-sm">(upcoming)</span>
-                  </span>
-                )}
+                {label} <span className="text-sm">(upcoming)</span>
               </div>
             );
           })}
