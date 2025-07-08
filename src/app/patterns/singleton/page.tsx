@@ -1,6 +1,7 @@
 "use client";
 
 import PatternLayout from "@/components/PatternLayout";
+import toast from "react-hot-toast";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -14,7 +15,7 @@ class ToastManager {
     return ToastManager.instance;
   }
   show(message: string) {
-    alert("Toast: " + message);
+    toast.success(message);
   }
 }
 
@@ -39,7 +40,7 @@ export default function SingletonPage() {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Example</h2>
       <button
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
         onClick={handleClick}
       >
         Show Toast (Singleton)
