@@ -21,6 +21,7 @@ export default function Home() {
     "iterator",
     "mediator",
     "memento",
+    "state",
   ];
 
   const allPatterns = [
