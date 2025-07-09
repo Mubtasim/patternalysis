@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 export default function Home() {
-  const implementedPatterns = ["singleton"];
+  const implementedPatterns = ["singleton", "observer"];
 
   const allPatterns = [
     "singleton",
