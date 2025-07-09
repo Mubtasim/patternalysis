@@ -23,6 +23,7 @@ export default function Home() {
     "memento",
     "state",
     "template-method",
+    "visitor",
   ];
 
   const allPatterns = [
