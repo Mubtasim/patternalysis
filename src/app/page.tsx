@@ -67,14 +67,14 @@ export default function Home() {
               <Link
                 key={name}
                 href={`/patterns/${name}`}
-                className="block p-4 h-20 flex items-center justify-center rounded-lg border bg-zinc-900 text-white border-zinc-700 hover:border-indigo-500 hover:bg-zinc-800 transition-all text-base font-medium tracking-wide"
+                className="block p-4 h-20 flex items-center justify-center rounded-lg border bg-zinc-900 text-white border-zinc-700 hover:border-indigo-500 hover:bg-zinc-800 transition-all text-base font-medium tracking-wide capitalize"
               >
                 {label}
               </Link>
             ) : (
               <div
                 key={name}
-                className="p-4 h-20 flex items-center justify-center rounded-lg border bg-zinc-900 text-zinc-500 border-zinc-800 cursor-not-allowed text-base font-medium tracking-wide gap-1"
+                className="p-4 h-20 flex items-center justify-center rounded-lg border bg-zinc-900 text-zinc-500 border-zinc-800 cursor-not-allowed text-base font-medium tracking-wide gap-1 capitalize"
               >
                 {label} <span className="text-sm">(upcoming)</span>
               </div>
