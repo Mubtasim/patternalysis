@@ -16,6 +16,7 @@ export default function Home() {
     "flyweight",
     "proxy",
     "chain-of-responsibility",
+    "command",
   ];
 
   const allPatterns = [
