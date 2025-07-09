@@ -25,6 +25,7 @@ export default function Home() {
     "template-method",
     "visitor",
     "abstract-factory",
+    "strategy",
   ];
 
   const allPatterns = [
