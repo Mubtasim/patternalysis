@@ -13,6 +13,7 @@ export default function Home() {
     "decorator",
     "composite",
     "facade",
+    "flyweight",
   ];
 
   const allPatterns = [
