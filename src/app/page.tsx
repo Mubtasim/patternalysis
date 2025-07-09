@@ -30,6 +30,11 @@ export default function Home() {
     "visitor",
   ];
 
+  const displayedPatterns = [
+    ...implementedPatterns,
+    ...allPatterns.filter((name) => !implementedPatterns.includes(name)),
+  ];
+
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-10">
       <div className="max-w-5xl mx-auto text-center">
@@ -42,7 +47,7 @@ export default function Home() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {allPatterns.map((name) => {
+          {displayedPatterns.map((name) => {
             const isImplemented = implementedPatterns.includes(name);
             const label = name.replace(/-/g, " ");
 
