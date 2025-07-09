@@ -22,6 +22,7 @@ export default function Home() {
     "mediator",
     "memento",
     "state",
+    "template-method",
   ];
 
   const allPatterns = [
