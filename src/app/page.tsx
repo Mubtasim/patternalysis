@@ -11,6 +11,7 @@ export default function Home() {
     "adapter",
     "bridge",
     "decorator",
+    "composite",
   ];
 
   const allPatterns = [
