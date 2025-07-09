@@ -8,6 +8,7 @@ export default function Home() {
     "factory-method",
     "builder",
     "prototype",
+    "adapter",
   ];
 
   const allPatterns = [
