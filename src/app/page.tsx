@@ -18,6 +18,7 @@ export default function Home() {
     "chain-of-responsibility",
     "command",
     "interpreter",
+    "iterator",
   ];
 
   const allPatterns = [
