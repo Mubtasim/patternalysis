@@ -7,6 +7,7 @@ export default function Home() {
     "observer",
     "factory-method",
     "builder",
+    "prototype",
   ];
 
   const allPatterns = [
