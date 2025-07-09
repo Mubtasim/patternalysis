@@ -12,6 +12,7 @@ export default function Home() {
     "bridge",
     "decorator",
     "composite",
+    "facade",
   ];
 
   const allPatterns = [
