@@ -9,6 +9,7 @@ export default function Home() {
     "builder",
     "prototype",
     "adapter",
+    "bridge",
   ];
 
   const allPatterns = [
