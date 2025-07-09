@@ -20,6 +20,7 @@ export default function Home() {
     "interpreter",
     "iterator",
     "mediator",
+    "memento",
   ];
 
   const allPatterns = [
