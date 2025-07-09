@@ -10,6 +10,7 @@ export default function Home() {
     "prototype",
     "adapter",
     "bridge",
+    "decorator",
   ];
 
   const allPatterns = [
