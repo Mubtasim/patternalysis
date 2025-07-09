@@ -1,6 +1,6 @@
-// app/patterns/observer/page.tsx
 "use client";
 
+import PatternLayout from "@/components/PatternLayout";
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -36,43 +36,44 @@ export default function ObserverPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-10">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-2">Observer Pattern</h1>
-        <p className="text-zinc-400 mb-6">
-          The Observer pattern defines a one-to-many dependency between objects,
-          so that when one object changes state, all its dependents are notified
-          and updated automatically.
-        </p>
+    <PatternLayout title="Observer">
+      <p className="mb-4">
+        Defines a one-to-many dependency between objects so that when one object
+        changes state, all its dependents are notified and updated
+        automatically.
+      </p>
 
-        <div className="flex gap-4 mb-4">
-          <button
-            onClick={handleSubscribe}
-            className="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded text-white"
-          >
-            Subscribe
-          </button>
-          <button
-            onClick={handleNotify}
-            className="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded text-white"
-          >
-            Notify All
-          </button>
-        </div>
+      <h2 className="text-xl font-semibold mt-6 mb-2">What is it?</h2>
+      <p className="mb-4">
+        The Observer pattern allows an object (the subject) to maintain a list
+        of dependents (observers) and notify them automatically of any state
+        changes.
+      </p>
 
-        <div className="bg-zinc-900 rounded p-4 mb-6 h-48 overflow-y-auto text-sm border border-zinc-800">
-          {logs.map((log, idx) => (
-            <div key={idx}>{log}</div>
-          ))}
-        </div>
-
-        <h2 className="text-2xl font-semibold mb-2">Code Example</h2>
-        <SyntaxHighlighter
-          language="ts"
-          style={atomDark}
-          customStyle={{ borderRadius: "0.5rem", fontSize: "0.875rem" }}
+      <h2 className="text-xl font-semibold mt-6 mb-2">Example</h2>
+      <div className="flex gap-4 mb-4">
+        <button
+          onClick={handleSubscribe}
+          className="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded text-white"
         >
-          {`class Observer {
+          Subscribe
+        </button>
+        <button
+          onClick={handleNotify}
+          className="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded text-white"
+        >
+          Notify All
+        </button>
+      </div>
+
+      <div className="bg-zinc-900 rounded p-4 mb-6 h-48 overflow-y-auto text-sm border border-zinc-800">
+        {logs.map((log, idx) => (
+          <div key={idx}>{log}</div>
+        ))}
+      </div>
+
+      <SyntaxHighlighter language="ts" style={atomDark} className="rounded">
+        {`class Observer {
   private subscribers: (() => void)[] = [];
 
   subscribe(callback: () => void) {
@@ -90,23 +91,28 @@ const eventSource = new Observer();
 const subscriber = () => console.log("Notified!");
 eventSource.subscribe(subscriber);
 eventSource.notifyAll();`}
-        </SyntaxHighlighter>
+      </SyntaxHighlighter>
 
-        <div className="mt-8 space-y-4 text-zinc-300">
-          <div>
-            <strong>Common Uses:</strong> Event listeners, pub-sub systems,
-            reactive programming (e.g. RxJS)
-          </div>
-          <div>
-            <strong>When to Use:</strong> When multiple objects need to reflect
-            the state of another object automatically
-          </div>
-          <div>
-            <strong>Caution:</strong> Can lead to memory leaks if subscribers
-            are not cleaned up
-          </div>
-        </div>
-      </div>
-    </div>
+      <h2 className="text-xl font-semibold mt-6 mb-2">Common Uses</h2>
+      <ul className="list-disc ml-6 mb-4">
+        <li>Event handling systems</li>
+        <li>Pub-sub implementations</li>
+        <li>Reactive libraries (e.g. RxJS, signals)</li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2">When to Use</h2>
+      <ul className="list-disc ml-6 mb-4">
+        <li>When multiple objects need to stay in sync with another</li>
+        <li>You want to decouple the subject and its observers</li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2">Caution</h2>
+      <ul className="list-disc ml-6">
+        <li>
+          Can cause memory leaks if subscribers aren’t properly cleaned up
+        </li>
+        <li>Too many observers can affect performance</li>
+      </ul>
+    </PatternLayout>
   );
 }
