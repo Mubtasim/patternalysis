@@ -14,6 +14,7 @@ export default function Home() {
     "composite",
     "facade",
     "flyweight",
+    "proxy",
   ];
 
   const allPatterns = [
