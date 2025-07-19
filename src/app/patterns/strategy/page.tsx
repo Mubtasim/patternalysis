@@ -5,299 +5,269 @@ import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-// Strategy Pattern Implementation
-interface SortStrategy {
-  sort(data: number[]): number[];
+// Strategy Pattern Implementation - Discount Calculator
+interface VIPDetails {
+  membershipYears: number;
+}
+
+interface FlashSaleDetails {
+  hoursLeft: number;
+}
+
+interface DiscountStrategy {
+  calculate(amount: number, details?: VIPDetails | FlashSaleDetails): number;
   getName(): string;
-  getComplexity(): string;
+  getDescription(): string;
 }
 
-class BubbleSort implements SortStrategy {
-  sort(data: number[]): number[] {
-    const arr = [...data];
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-        }
-      }
-    }
-    return arr;
+class StudentDiscount implements DiscountStrategy {
+  calculate(amount: number): number {
+    return amount * 0.15; // 15% student discount
   }
 
   getName(): string {
-    return "Bubble Sort";
+    return "Student Discount";
   }
 
-  getComplexity(): string {
-    return "O(n²)";
+  getDescription(): string {
+    return "15% off for students with valid ID";
   }
 }
 
-class QuickSort implements SortStrategy {
-  sort(data: number[]): number[] {
-    if (data.length <= 1) return data;
-    const [pivot, ...rest] = data;
-    const left = rest.filter((x) => x < pivot);
-    const right = rest.filter((x) => x >= pivot);
-    return [...this.sort(left), pivot, ...this.sort(right)];
+class SeniorDiscount implements DiscountStrategy {
+  calculate(amount: number): number {
+    return amount * 0.20; // 20% senior discount
   }
 
   getName(): string {
-    return "Quick Sort";
+    return "Senior Discount";
   }
 
-  getComplexity(): string {
-    return "O(n log n)";
+  getDescription(): string {
+    return "20% off for customers 65+";
   }
 }
 
-class MergeSort implements SortStrategy {
-  sort(data: number[]): number[] {
-    if (data.length <= 1) return data;
-    
-    const mid = Math.floor(data.length / 2);
-    const left = this.sort(data.slice(0, mid));
-    const right = this.sort(data.slice(mid));
-    
-    return this.merge(left, right);
-  }
-
-  private merge(left: number[], right: number[]): number[] {
-    const result: number[] = [];
-    let leftIndex = 0;
-    let rightIndex = 0;
-
-    while (leftIndex < left.length && rightIndex < right.length) {
-      if (left[leftIndex] < right[rightIndex]) {
-        result.push(left[leftIndex]);
-        leftIndex++;
-      } else {
-        result.push(right[rightIndex]);
-        rightIndex++;
-      }
-    }
-
-    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+class VIPDiscount implements DiscountStrategy {
+  calculate(amount: number, details: { membershipYears: number }): number {
+    const baseDiscount = 0.25; // 25% base VIP discount
+    const loyaltyBonus = Math.min(details.membershipYears * 0.02, 0.15); // 2% per year, max 15%
+    return amount * (baseDiscount + loyaltyBonus);
   }
 
   getName(): string {
-    return "Merge Sort";
+    return "VIP Discount";
   }
 
-  getComplexity(): string {
-    return "O(n log n)";
+  getDescription(): string {
+    return "25% + 2% per membership year (max 40% total)";
   }
 }
 
-class StrategySorter {
-  private strategy: SortStrategy;
-  private static sortCount = 0;
-  private static sortLog: string[] = [];
+// NEW requirement that breaks hardcoded logic
+class FlashSaleDiscount implements DiscountStrategy {
+  calculate(amount: number, details: { hoursLeft: number }): number {
+    // Higher discount for more urgency
+    if (details.hoursLeft <= 1) return amount * 0.50; // 50% off
+    if (details.hoursLeft <= 6) return amount * 0.35; // 35% off
+    return amount * 0.25; // 25% off
+  }
 
-  constructor(strategy: SortStrategy) {
+  getName(): string {
+    return "Flash Sale";
+  }
+
+  getDescription(): string {
+    return "Time-sensitive: 25-50% based on urgency";
+  }
+}
+
+class DiscountCalculator {
+  private strategy: DiscountStrategy;
+  private static calculationLog: string[] = [];
+
+  constructor(strategy: DiscountStrategy) {
     this.strategy = strategy;
   }
 
-  setStrategy(strategy: SortStrategy) {
+  setStrategy(strategy: DiscountStrategy): void {
+    console.log('🔧 setStrategy called with:', strategy.getName());
     this.strategy = strategy;
     const timestamp = new Date().toLocaleTimeString();
-    StrategySorter.sortLog.push(`🔄 [${timestamp}] Strategy changed to ${strategy.getName()}`);
+    const logMessage = `🔄 [${timestamp}] Strategy changed to ${strategy.getName()}`;
+    DiscountCalculator.calculationLog.push(logMessage);
+    console.log('📝 Added to log:', logMessage);
+    console.log('📚 Current log array:', DiscountCalculator.calculationLog);
   }
 
-  sort(data: number[]): number[] {
-    StrategySorter.sortCount++;
+  calculateDiscount(amount: number, details?: VIPDetails | FlashSaleDetails): { discount: number; final: number } {
+    console.log('💰 calculateDiscount called with:', amount, details);
     const timestamp = new Date().toLocaleTimeString();
-    const result = this.strategy.sort(data);
+    const discount = this.strategy.calculate(amount, details);
+    const final = amount - discount;
     
-    StrategySorter.sortLog.push(
-      `✅ [${timestamp}] Sorted [${data.join(',')}] → [${result.join(',')}] using ${this.strategy.getName()} (${this.strategy.getComplexity()})`
-    );
+    const logMessage = `✅ [${timestamp}] ${this.strategy.getName()}: $${amount} → -$${discount.toFixed(2)} = $${final.toFixed(2)}`;
+    DiscountCalculator.calculationLog.push(logMessage);
+    console.log('📝 Added to log:', logMessage);
+    console.log('📚 Current log array:', DiscountCalculator.calculationLog);
     
-    return result;
+    return { discount, final };
   }
 
-  static getSortCount(): number {
-    return StrategySorter.sortCount;
+  static getCalculationLog(): string[] {
+    const logs = DiscountCalculator.calculationLog.slice(-6);
+    console.log('📖 getCalculationLog returning:', logs);
+    return logs;
   }
 
-  static getSortLog(): string[] {
-    return StrategySorter.sortLog.slice(-5);
-  }
-
-  static resetStats(): void {
-    StrategySorter.sortCount = 0;
-    StrategySorter.sortLog = [];
+  static resetLog(): void {
+    DiscountCalculator.calculationLog = [];
   }
 }
 
-// Hardcoded Logic Implementation (Anti-pattern)
-class HardcodedSorter {
-  private static sortCount = 0;
-  private static sortLog: string[] = [];
+// Hardcoded Logic Implementation (Anti-pattern) - BREAKS with new requirements
+class HardcodedDiscountCalculator {
+  private static calculationLog: string[] = [];
 
-  static sort(data: number[], algorithm: string): number[] {
-    HardcodedSorter.sortCount++;
+  static calculateDiscount(amount: number, discountType: string, details?: VIPDetails | FlashSaleDetails): { discount: number; final: number } {
     const timestamp = new Date().toLocaleTimeString();
+    let discount: number;
     
-    let result: number[];
-    let complexity: string;
-
-    // This is the problem - hardcoded switch statement that needs modification for each new algorithm
-    switch (algorithm) {
-      case "bubble":
-        result = HardcodedSorter.bubbleSort([...data]);
-        complexity = "O(n²)";
+    // This hardcoded switch statement CANNOT handle new FlashSale discount!
+    switch (discountType) {
+      case "student":
+        discount = amount * 0.15;
         break;
-      case "quick":
-        result = HardcodedSorter.quickSort([...data]);
-        complexity = "O(n log n)";
+      case "senior":
+        discount = amount * 0.20;
         break;
-      case "merge":
-        result = HardcodedSorter.mergeSort([...data]);
-        complexity = "O(n log n)";
+      case "vip":
+        const vipDetails = details as VIPDetails;
+        const loyaltyBonus = Math.min((vipDetails?.membershipYears || 0) * 0.02, 0.15);
+        discount = amount * (0.25 + loyaltyBonus);
         break;
+      // NOTE: FlashSale is NOT supported - missing case!
       default:
-        HardcodedSorter.sortLog.push(`❌ [${timestamp}] Unknown algorithm: ${algorithm}`);
-        throw new Error(`Unsupported sorting algorithm: ${algorithm}`);
+        HardcodedDiscountCalculator.calculationLog.push(`❌ [${timestamp}] ERROR: Unknown discount type '${discountType}'`);
+        throw new Error(`Unsupported discount type: ${discountType}`);
     }
 
-    HardcodedSorter.sortLog.push(
-      `✅ [${timestamp}] Hardcoded sort [${data.join(',')}] → [${result.join(',')}] using ${algorithm} (${complexity}) - switch statement logic!`
+    const final = amount - discount;
+    HardcodedDiscountCalculator.calculationLog.push(
+      `✅ [${timestamp}] Hardcoded ${discountType}: $${amount} → -$${discount.toFixed(2)} = $${final.toFixed(2)}`
     );
-
-    return result;
-  }
-
-  private static bubbleSort(arr: number[]): number[] {
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-        }
-      }
-    }
-    return arr;
-  }
-
-  private static quickSort(data: number[]): number[] {
-    if (data.length <= 1) return data;
-    const [pivot, ...rest] = data;
-    const left = rest.filter((x) => x < pivot);
-    const right = rest.filter((x) => x >= pivot);
-    return [...HardcodedSorter.quickSort(left), pivot, ...HardcodedSorter.quickSort(right)];
-  }
-
-  private static mergeSort(data: number[]): number[] {
-    if (data.length <= 1) return data;
     
-    const mid = Math.floor(data.length / 2);
-    const left = HardcodedSorter.mergeSort(data.slice(0, mid));
-    const right = HardcodedSorter.mergeSort(data.slice(mid));
-    
-    return HardcodedSorter.merge(left, right);
+    return { discount, final };
   }
 
-  private static merge(left: number[], right: number[]): number[] {
-    const result: number[] = [];
-    let leftIndex = 0;
-    let rightIndex = 0;
-
-    while (leftIndex < left.length && rightIndex < right.length) {
-      if (left[leftIndex] < right[rightIndex]) {
-        result.push(left[leftIndex]);
-        leftIndex++;
-      } else {
-        result.push(right[rightIndex]);
-        rightIndex++;
-      }
-    }
-
-    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+  static getCalculationLog(): string[] {
+    return HardcodedDiscountCalculator.calculationLog.slice(-6);
   }
 
-  static getSortCount(): number {
-    return HardcodedSorter.sortCount;
-  }
-
-  static getSortLog(): string[] {
-    return HardcodedSorter.sortLog.slice(-5);
-  }
-
-  static resetStats(): void {
-    HardcodedSorter.sortCount = 0;
-    HardcodedSorter.sortLog = [];
+  static resetLog(): void {
+    HardcodedDiscountCalculator.calculationLog = [];
   }
 }
 
 export default function StrategyPatternPage() {
   const [strategyLogs, setStrategyLogs] = useState<string[]>([]);
   const [hardcodedLogs, setHardcodedLogs] = useState<string[]>([]);
-  const [strategyCount, setStrategyCount] = useState(0);
-  const [hardcodedCount, setHardcodedCount] = useState(0);
-  const [testData] = useState<number[]>([64, 34, 25, 12, 22, 11, 90]);
+  const [purchaseAmount] = useState(100);
+  const [membershipYears] = useState(3);
+  const [flashSaleHours] = useState(2);
   const [maintenanceDemo, setMaintenanceDemo] = useState<{strategy: string[], hardcoded: string[]} | null>(null);
 
-  // Use persistent instances
-  const [strategySorter] = useState(() => new StrategySorter(new BubbleSort()));
+  // Use persistent instance
+  const [discountCalculator] = useState(() => new DiscountCalculator(new StudentDiscount()));
 
-  const handleStrategySort = (algorithmName: string) => {
-    let strategy: SortStrategy;
-    switch (algorithmName) {
-      case "bubble":
-        strategy = new BubbleSort();
+  const handleStrategyDiscount = (discountType: string) => {
+    console.log('🔍 handleStrategyDiscount called with:', discountType);
+    let strategy: DiscountStrategy;
+    let details: VIPDetails | FlashSaleDetails | undefined = undefined;
+
+    switch (discountType) {
+      case "student":
+        strategy = new StudentDiscount();
         break;
-      case "quick":
-        strategy = new QuickSort();
+      case "senior":
+        strategy = new SeniorDiscount();
         break;
-      case "merge":
-        strategy = new MergeSort();
+      case "vip":
+        strategy = new VIPDiscount();
+        details = { membershipYears };
+        break;
+      case "flash":
+        strategy = new FlashSaleDiscount();
+        details = { hoursLeft: flashSaleHours };
         break;
       default:
+        console.log('❌ Unknown discount type:', discountType);
         return;
     }
 
-    strategySorter.setStrategy(strategy);
-    strategySorter.sort(testData);
-    setStrategyLogs(StrategySorter.getSortLog());
-    setStrategyCount(StrategySorter.getSortCount());
+    console.log('📊 About to call setStrategy with:', strategy.getName());
+    discountCalculator.setStrategy(strategy);
+    
+    console.log('💰 About to calculateDiscount with amount:', purchaseAmount, 'details:', details);
+    const result = discountCalculator.calculateDiscount(purchaseAmount, details);
+    console.log('💰 calculateDiscount result:', result);
+    
+    const logs = DiscountCalculator.getCalculationLog();
+    console.log('📝 Current logs:', logs);
+    
+    setStrategyLogs(logs);
+    console.log('🔄 setStrategyLogs called with:', logs);
   };
 
-  const handleHardcodedSort = (algorithmName: string) => {
+  const handleHardcodedDiscount = (discountType: string) => {
     try {
-      HardcodedSorter.sort(testData, algorithmName);
-      setHardcodedLogs(HardcodedSorter.getSortLog());
-      setHardcodedCount(HardcodedSorter.getSortCount());
+      let details: VIPDetails | FlashSaleDetails | undefined = undefined;
+      
+      if (discountType === "vip") {
+        details = { membershipYears };
+      } else if (discountType === "flash") {
+        details = { hoursLeft: flashSaleHours };
+      }
+
+      HardcodedDiscountCalculator.calculateDiscount(purchaseAmount, discountType, details);
+      setHardcodedLogs(HardcodedDiscountCalculator.getCalculationLog());
     } catch {
-      setHardcodedLogs(HardcodedSorter.getSortLog());
-      setHardcodedCount(HardcodedSorter.getSortCount());
+      setHardcodedLogs(HardcodedDiscountCalculator.getCalculationLog());
     }
   };
 
   const handleMaintenanceDemo = () => {
     const strategyMaintenance = [
-      "🔍 Request: Add Heap Sort algorithm",
-      "📝 Step 1: Create HeapSort class implementing SortStrategy interface",
-      "💡 Step 2: Implement sort(), getName(), and getComplexity() methods",
-      "✅ DONE! HeapSort can now be used anywhere strategies are accepted",
-      "🧪 Zero changes needed to existing Sorter class or client code",
-      "🔌 Plug-and-play: Just pass new HeapSort() to setStrategy()"
+      "💼 Business Request: Add Flash Sale discount system",
+      "⚡ Requirements: Time-sensitive pricing (25-50% based on urgency)",
+      "",
+      "📝 Strategy Pattern Implementation:",
+      "✅ Step 1: Create FlashSaleDiscount class implementing DiscountStrategy",
+      "✅ Step 2: Implement calculate() method with time-based logic",
+      "✅ Step 3: Add getName() and getDescription() methods",
+      "",
+      "🎯 RESULT: Immediately works with existing DiscountCalculator!",
+      "🔌 Zero changes to client code or existing discount logic",
+      "🚀 Calculator.setStrategy(new FlashSaleDiscount()) - Done!"
     ];
 
     const hardcodedMaintenance = [
-      "🔍 Request: Add Heap Sort algorithm",
-      "📝 Step 1: Implement heapSort() method in HardcodedSorter class",
-      "❌ Step 2: Add 'heap' case to the main switch statement",
-      "❌ Step 3: Update all UI dropdowns to include 'Heap Sort' option",
-      "❌ Step 4: Update all algorithm documentation/comments",
-      "❌ Step 5: Find and update DataProcessor.sort() switch statement",
-      "❌ Step 6: Find and update ReportGenerator.sort() switch statement",
-      "❌ Step 7: Find and update ExportService.sort() switch statement",
-      "❌ Step 8: Update all 15 other places that have hardcoded algorithm logic",
-      "❌ Step 9: Update unit tests for each modified class",
-      "❌ Step 10: Update integration tests that rely on algorithm lists",
-      "⚠️  Step 11: Search codebase for any missed hardcoded references",
-      "💥 RISK: Easy to miss a switch statement and break existing functionality"
+      "💼 Business Request: Add Flash Sale discount system",
+      "⚡ Requirements: Time-sensitive pricing (25-50% based on urgency)",
+      "",
+      "📝 Hardcoded Logic Implementation:",
+      "❌ Step 1: Find the main switch statement in calculateDiscount()",
+      "❌ Step 2: Add new 'flash' case with complex time logic",
+      "❌ Step 3: Update all UI components to include Flash Sale option",
+      "❌ Step 4: Find PricingService.calculatePrice() - add flash case",
+      "❌ Step 5: Find OrderProcessor.applyDiscounts() - add flash case",
+      "❌ Step 6: Find ReportGenerator.getDiscountBreakdown() - add flash case",
+      "❌ Step 7: Find EmailService.sendReceipt() - add flash case description",
+      "❌ Step 8: Find AdminPanel.getDiscountTypes() - add flash option",
+      "❌ Step 9: Update validation logic in 12 different places",
+      "",
+      "💥 RISK: Miss one switch statement → Runtime errors in production!",
+      "🔍 Real situation: 'flash' not in HardcodedDiscountCalculator → CRASH!"
     ];
 
     setMaintenanceDemo({
@@ -307,36 +277,38 @@ export default function StrategyPatternPage() {
   };
 
   const resetDemo = () => {
-    StrategySorter.resetStats();
-    HardcodedSorter.resetStats();
+    DiscountCalculator.resetLog();
+    HardcodedDiscountCalculator.resetLog();
     setStrategyLogs([]);
     setHardcodedLogs([]);
-    setStrategyCount(0);
-    setHardcodedCount(0);
     setMaintenanceDemo(null);
   };
 
   return (
     <PatternLayout title="Strategy">
       <p className="mb-4">
-        Defines a family of algorithms, encapsulates each one, and makes them
-        interchangeable.
+        Define a family of algorithms, encapsulate each one, and make them
+        interchangeable without breaking existing code.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">What is it?</h2>
       <p className="mb-4">
-        The Strategy pattern lets you select an algorithm&apos;s behavior at
-        runtime without altering the client code or using complex conditional logic.
+        The Strategy pattern allows you to select algorithms at runtime without
+        modifying client code or creating complex conditional logic that breaks when extended.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Interactive Demo: Strategy vs Hardcoded Logic</h2>
       <p className="mb-4 text-zinc-400">
-        Compare how Strategy Pattern provides clean algorithm switching vs hardcoded conditional logic:
+        Test a discount system. Watch what happens when a NEW discount type (Flash Sale) is needed:
       </p>
 
       <div className="mb-4 p-3 bg-zinc-800 rounded border border-zinc-600">
-        <h4 className="font-semibold mb-2 text-zinc-300">Test Data:</h4>
-        <div className="font-mono text-sm text-blue-300">[{testData.join(', ')}]</div>
+        <h4 className="font-semibold mb-2 text-zinc-300">Shopping Scenario:</h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>📦 <strong>Purchase Amount:</strong> ${purchaseAmount}</div>
+          <div>🎓 <strong>VIP Membership:</strong> {membershipYears} years</div>
+          <div>⏰ <strong>Flash Sale Time Left:</strong> {flashSaleHours} hours</div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -344,45 +316,43 @@ export default function StrategyPatternPage() {
         <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
           <h3 className="text-lg font-semibold mb-3 text-green-400">⚡ Strategy Pattern</h3>
           
-          <div className="grid grid-cols-1 gap-2 mb-3">
+          <div className="grid grid-cols-2 gap-2 mb-3">
             <button
-              onClick={() => handleStrategySort("bubble")}
+              onClick={() => handleStrategyDiscount("student")}
               className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded text-sm"
             >
-              Use Bubble Sort Strategy
+              Student (15%)
             </button>
             <button
-              onClick={() => handleStrategySort("quick")}
+              onClick={() => handleStrategyDiscount("senior")}
               className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded text-sm"
             >
-              Use Quick Sort Strategy
+              Senior (20%)
             </button>
             <button
-              onClick={() => handleStrategySort("merge")}
+              onClick={() => handleStrategyDiscount("vip")}
               className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded text-sm"
             >
-              Use Merge Sort Strategy
+              VIP (25%+)
             </button>
-          </div>
-          
-          <div className="space-y-2 text-sm mb-3">
-            <div className="flex justify-between">
-              <span>Sorts Performed:</span>
-              <span className="font-mono bg-zinc-800 px-2 py-1 rounded text-green-400">
-                {strategyCount}
-              </span>
-            </div>
+            <button
+              onClick={() => handleStrategyDiscount("flash")}
+              className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded text-sm border-2 border-yellow-400 relative"
+            >
+              <span className="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs px-1 rounded">NEW</span>
+              Flash Sale
+            </button>
           </div>
           
           <div>
-            <span className="block mb-1 text-sm">Recent Activity:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
+            <span className="block mb-1 text-sm">Activity Log:</span>
+            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[140px] max-h-[140px] overflow-y-auto">
               {strategyLogs.length > 0 ? (
                 strategyLogs.map((log, idx) => (
-                  <div key={idx} className="mb-1 break-all">{log}</div>
+                  <div key={idx} className="mb-1 break-all text-green-300">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">No activity yet...</div>
+                <div className="text-zinc-500">Try the discount buttons above...</div>
               )}
             </div>
           </div>
@@ -392,45 +362,45 @@ export default function StrategyPatternPage() {
         <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
           <h3 className="text-lg font-semibold mb-3 text-red-400">🔀 Hardcoded Logic</h3>
           
-          <div className="grid grid-cols-1 gap-2 mb-3">
+          <div className="grid grid-cols-2 gap-2 mb-3">
             <button
-              onClick={() => handleHardcodedSort("bubble")}
+              onClick={() => handleHardcodedDiscount("student")}
               className="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded text-sm"
             >
-              Hardcoded Bubble Sort
+              Student (15%)
             </button>
             <button
-              onClick={() => handleHardcodedSort("quick")}
+              onClick={() => handleHardcodedDiscount("senior")}
               className="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded text-sm"
             >
-              Hardcoded Quick Sort
+              Senior (20%)
             </button>
             <button
-              onClick={() => handleHardcodedSort("merge")}
+              onClick={() => handleHardcodedDiscount("vip")}
               className="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded text-sm"
             >
-              Hardcoded Merge Sort
+              VIP (25%+)
             </button>
-          </div>
-          
-          <div className="space-y-2 text-sm mb-3">
-            <div className="flex justify-between">
-              <span>Sorts Performed:</span>
-              <span className="font-mono bg-zinc-800 px-2 py-1 rounded text-red-400">
-                {hardcodedCount}
-              </span>
-            </div>
+            <button
+              onClick={() => handleHardcodedDiscount("flash")}
+              className="bg-red-800 hover:bg-red-700 text-white px-3 py-2 rounded text-sm border-2 border-red-400 relative opacity-75"
+            >
+              <span className="absolute -top-1 -right-1 bg-red-400 text-black text-xs px-1 rounded">💥</span>
+              Flash Sale
+            </button>
           </div>
           
           <div>
-            <span className="block mb-1 text-sm">Recent Activity:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
+            <span className="block mb-1 text-sm">Activity Log:</span>
+            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[140px] max-h-[140px] overflow-y-auto">
               {hardcodedLogs.length > 0 ? (
                 hardcodedLogs.map((log, idx) => (
-                  <div key={idx} className="mb-1 break-all">{log}</div>
+                  <div key={idx} className={`mb-1 break-all ${log.includes('ERROR') ? 'text-red-400' : 'text-red-300'}`}>
+                    {log}
+                  </div>
                 ))
               ) : (
-                <div className="text-zinc-500">No activity yet...</div>
+                <div className="text-zinc-500">Try the discount buttons above...</div>
               )}
             </div>
           </div>
@@ -438,11 +408,11 @@ export default function StrategyPatternPage() {
       </div>
 
       <div className="mb-6 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
-        <h4 className="font-semibold mb-2 text-blue-300">💡 Key Differences:</h4>
+        <h4 className="font-semibold mb-2 text-blue-300">💡 Key Insight:</h4>
         <ul className="text-sm space-y-1 text-blue-200">
-          <li>• <strong>Strategy Pattern</strong>: Clean polymorphism, easy to extend, encapsulated algorithms</li>
-          <li>• <strong>Hardcoded Logic</strong>: Complex switch statements, scattered logic, hard to maintain</li>
-          <li>• Notice how Strategy provides cleaner logs and better algorithm information!</li>
+          <li>• <strong>Strategy Pattern</strong>: NEW Flash Sale works immediately - no code changes needed!</li>
+          <li>• <strong>Hardcoded Logic</strong>: NEW Flash Sale CRASHES - missing switch case breaks production!</li>
+          <li>• <strong>Real Impact</strong>: Strategy enables safe extension, hardcoded logic creates maintenance nightmares</li>
         </ul>
       </div>
 
@@ -451,7 +421,7 @@ export default function StrategyPatternPage() {
           className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold"
           onClick={handleMaintenanceDemo}
         >
-          🔧 Simulate Code Maintenance: Add Heap Sort Algorithm
+          🔧 Simulate Code Maintenance: Adding Flash Sale Feature
         </button>
       </div>
 
@@ -460,40 +430,34 @@ export default function StrategyPatternPage() {
           {/* Strategy Maintenance */}
           <div className="bg-green-900/20 border border-green-700 rounded-lg p-4">
             <h4 className="font-semibold mb-3 text-green-300 flex items-center">
-              ⚡ Strategy Pattern Approach
+              ⚡ Strategy Pattern: Easy Extension
             </h4>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {maintenanceDemo.strategy.map((step, idx) => (
-                <div key={idx} className="text-sm text-green-200 flex items-start gap-2">
-                  <span className="text-green-400 font-mono text-xs mt-0.5">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <span>{step}</span>
+                <div key={idx} className="text-sm text-green-200">
+                  {step === "" ? <div className="h-2"></div> : step}
                 </div>
               ))}
             </div>
             <div className="mt-3 p-2 bg-green-800/30 rounded text-xs text-green-100">
-              <strong>Result:</strong> Plug-and-play extension, zero existing code changes
+              <strong>✅ Result:</strong> New feature works instantly, zero risk of breaking existing code
             </div>
           </div>
 
           {/* Hardcoded Logic Maintenance */}
           <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
             <h4 className="font-semibold mb-3 text-red-300 flex items-center">
-              🔀 Hardcoded Logic Approach
+              🔀 Hardcoded Logic: Maintenance Nightmare
             </h4>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {maintenanceDemo.hardcoded.map((step, idx) => (
-                <div key={idx} className="text-sm text-red-200 flex items-start gap-2">
-                  <span className="text-red-400 font-mono text-xs mt-0.5">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <span>{step}</span>
+                <div key={idx} className="text-sm text-red-200">
+                  {step === "" ? <div className="h-2"></div> : step}
                 </div>
               ))}
             </div>
             <div className="mt-3 p-2 bg-red-800/30 rounded text-xs text-red-100">
-              <strong>Result:</strong> Multiple file changes, high risk of missing switch statements
+              <strong>💥 Result:</strong> High risk of runtime errors, scattered changes across entire codebase
             </div>
           </div>
         </div>
@@ -508,48 +472,47 @@ export default function StrategyPatternPage() {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Code Example</h2>
       <SyntaxHighlighter language="ts" style={atomDark} className="rounded">
-        {`interface SortStrategy {
-  sort(data: number[]): number[];
+        {`interface DiscountStrategy {
+  calculate(amount: number, details?: any): number;
   getName(): string;
-  getComplexity(): string;
 }
 
-class QuickSort implements SortStrategy {
-  sort(data: number[]): number[] {
-    // Quick sort implementation
-    return this.quickSortRecursive(data);
+class FlashSaleDiscount implements DiscountStrategy {
+  calculate(amount: number, details: { hoursLeft: number }): number {
+    if (details.hoursLeft <= 1) return amount * 0.50; // 50% off
+    if (details.hoursLeft <= 6) return amount * 0.35; // 35% off
+    return amount * 0.25; // 25% off
   }
   
-  getName(): string { return "Quick Sort"; }
-  getComplexity(): string { return "O(n log n)"; }
+  getName(): string { return "Flash Sale"; }
 }
 
-class StrategySorter {
-  private strategy: SortStrategy;
+class DiscountCalculator {
+  private strategy: DiscountStrategy;
 
-  setStrategy(strategy: SortStrategy) {
-    this.strategy = strategy;
+  setStrategy(strategy: DiscountStrategy) {
+    this.strategy = strategy; // Clean algorithm switching
   }
 
-  sort(data: number[]): number[] {
-    return this.strategy.sort(data); // Clean delegation
+  calculate(amount: number, details?: any): number {
+    return this.strategy.calculate(amount, details); // No conditionals!
   }
 }
 
-// Usage - Clean and extensible
-const sorter = new StrategySorter();
-sorter.setStrategy(new QuickSort());
-const result = sorter.sort([64, 34, 25, 12]);
+// Usage - New strategies work immediately
+const calculator = new DiscountCalculator();
+calculator.setStrategy(new FlashSaleDiscount());
+const discount = calculator.calculate(100, { hoursLeft: 2 });
 
-// vs Hardcoded Approach - Complex and brittle
-class HardcodedSorter {
-  static sort(data: number[], algorithm: string): number[] {
-    switch (algorithm) { // This grows complex quickly
-      case "bubble": return this.bubbleSort(data);
-      case "quick": return this.quickSort(data);
-      case "merge": return this.mergeSort(data);
-      case "heap": return this.heapSort(data); // Each addition requires changes here
-      default: throw new Error("Unsupported algorithm");
+// vs Hardcoded Approach - Breaks when extended
+class HardcodedCalculator {
+  static calculate(amount: number, type: string, details?: any): number {
+    switch (type) { // This switch must be updated everywhere!
+      case "student": return amount * 0.15;
+      case "senior": return amount * 0.20;
+      case "vip": return amount * 0.25;
+      // Missing "flash" case = Runtime Error!
+      default: throw new Error(\`Unknown type: \${type}\`);
     }
   }
 }`}
@@ -557,27 +520,29 @@ class HardcodedSorter {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Common Uses</h2>
       <ul className="list-disc ml-6 mb-4">
-        <li>Choosing algorithms at runtime (sorting, compression, encryption)</li>
-        <li>Payment processing (credit card, PayPal, bank transfer)</li>
-        <li>Validation strategies (email, phone, password strength)</li>
-        <li>Data export formats (PDF, Excel, CSV)</li>
-        <li>Authentication methods (OAuth, JWT, API keys)</li>
+        <li>Payment processing (credit card, PayPal, crypto, buy-now-pay-later)</li>
+        <li>Pricing strategies (regular, discount, subscription, bulk pricing)</li>
+        <li>Data validation (email, phone, password strength, custom rules)</li>
+        <li>File export formats (PDF, Excel, CSV, JSON)</li>
+        <li>Authentication methods (OAuth, JWT, API keys, biometric)</li>
+        <li>Sorting/filtering algorithms (performance vs memory trade-offs)</li>
       </ul>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">When to Use</h2>
       <ul className="list-disc ml-6 mb-4">
-        <li>When you need to select behavior dynamically</li>
-        <li>When multiple variants of an algorithm are needed</li>
-        <li>To eliminate complex conditional logic (if/else, switch statements)</li>
+        <li>When you need multiple ways to perform the same task</li>
         <li>When algorithms should be interchangeable at runtime</li>
+        <li>To eliminate complex if/else or switch statement chains</li>
+        <li>When new algorithm variants are frequently added</li>
+        <li>When algorithms have different performance characteristics</li>
       </ul>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Caution</h2>
       <ul className="list-disc ml-6">
-        <li>Can increase number of classes (but improves maintainability)</li>
-        <li>Clients must be aware of different strategies</li>
-        <li>Overkill for simple algorithms that rarely change</li>
-        <li>Strategy switching overhead for performance-critical applications</li>
+        <li>Increases the number of classes (but improves maintainability)</li>
+        <li>Clients must understand available strategies</li>
+        <li>Overkill for simple algorithms that never change</li>
+        <li>Strategy selection logic still needs to exist somewhere</li>
       </ul>
     </PatternLayout>
   );
