@@ -91,33 +91,25 @@ class DiscountCalculator {
   }
 
   setStrategy(strategy: DiscountStrategy): void {
-    console.log('🔧 setStrategy called with:', strategy.getName());
     this.strategy = strategy;
     const timestamp = new Date().toLocaleTimeString();
     const logMessage = `🔄 [${timestamp}] Strategy changed to ${strategy.getName()}`;
     DiscountCalculator.calculationLog.push(logMessage);
-    console.log('📝 Added to log:', logMessage);
-    console.log('📚 Current log array:', DiscountCalculator.calculationLog);
   }
 
   calculateDiscount(amount: number, details?: VIPDetails | FlashSaleDetails): { discount: number; final: number } {
-    console.log('💰 calculateDiscount called with:', amount, details);
     const timestamp = new Date().toLocaleTimeString();
     const discount = this.strategy.calculate(amount, details);
     const final = amount - discount;
     
     const logMessage = `✅ [${timestamp}] ${this.strategy.getName()}: $${amount} → -$${discount.toFixed(2)} = $${final.toFixed(2)}`;
     DiscountCalculator.calculationLog.push(logMessage);
-    console.log('📝 Added to log:', logMessage);
-    console.log('📚 Current log array:', DiscountCalculator.calculationLog);
     
     return { discount, final };
   }
 
   static getCalculationLog(): string[] {
-    const logs = DiscountCalculator.calculationLog.slice(-6);
-    console.log('📖 getCalculationLog returning:', logs);
-    return logs;
+    return DiscountCalculator.calculationLog.slice(-6);
   }
 
   static resetLog(): void {
@@ -181,7 +173,6 @@ export default function StrategyPatternPage() {
   const [discountCalculator] = useState(() => new DiscountCalculator(new StudentDiscount()));
 
   const handleStrategyDiscount = (discountType: string) => {
-    console.log('🔍 handleStrategyDiscount called with:', discountType);
     let strategy: DiscountStrategy;
     let details: VIPDetails | FlashSaleDetails | undefined = undefined;
 
@@ -201,22 +192,12 @@ export default function StrategyPatternPage() {
         details = { hoursLeft: flashSaleHours };
         break;
       default:
-        console.log('❌ Unknown discount type:', discountType);
         return;
     }
 
-    console.log('📊 About to call setStrategy with:', strategy.getName());
     discountCalculator.setStrategy(strategy);
-    
-    console.log('💰 About to calculateDiscount with amount:', purchaseAmount, 'details:', details);
-    const result = discountCalculator.calculateDiscount(purchaseAmount, details);
-    console.log('💰 calculateDiscount result:', result);
-    
-    const logs = DiscountCalculator.getCalculationLog();
-    console.log('📝 Current logs:', logs);
-    
-    setStrategyLogs(logs);
-    console.log('🔄 setStrategyLogs called with:', logs);
+    discountCalculator.calculateDiscount(purchaseAmount, details);
+    setStrategyLogs(DiscountCalculator.getCalculationLog());
   };
 
   const handleHardcodedDiscount = (discountType: string) => {
