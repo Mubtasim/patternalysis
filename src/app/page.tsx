@@ -148,18 +148,17 @@ export default function Home() {
               >
                 👀 Try Observer Pattern
               </Link>
+              <button
+                onClick={() => document.getElementById('patterns-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-zinc-700 hover:bg-zinc-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+              >
+                📚 Browse All Patterns
+              </button>
             </div>
-            <p className="text-sm text-zinc-500">
-              ↑ Try these enhanced patterns with dramatic demos
-            </p>
           </div>
 
           {/* Quick Stats */}
           <div className="flex justify-center gap-8 mt-8 text-sm">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-400">5</div>
-              <div className="text-zinc-400">Enhanced Patterns</div>
-            </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-400">23</div>
               <div className="text-zinc-400">Total Patterns</div>
@@ -172,7 +171,7 @@ export default function Home() {
         </div>
 
         {/* Pattern Categories */}
-        <div className="space-y-8">
+        <div id="patterns-section" className="space-y-8">
           {Object.entries(patternCategories).map(([key, category]) => (
             <div key={key} className="text-left">
               {/* Category Header */}
