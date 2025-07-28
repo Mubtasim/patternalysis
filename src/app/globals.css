@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
 :root {
+  /* Light theme colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f0f0f;
+  --card: #ffffff;
+  --card-foreground: #0f0f0f;
+  --popover: #ffffff;
+  --popover-foreground: #0f0f0f;
+  --primary: #171717;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #0f0f0f;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #0f0f0f;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #171717;
+  --radius: 0.5rem;
+  
+  /* Pattern demo colors - Light theme */
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --error: #ef4444;
+  --error-foreground: #ffffff;
+  --info: #3b82f6;
+  --info-foreground: #ffffff;
+  
+  /* Pattern-specific colors - Light theme */
+  --pattern-green: #16a34a;
+  --pattern-green-bg: #dcfce7;
+  --pattern-green-border: #16a34a;
+  --pattern-blue: #2563eb;
+  --pattern-blue-bg: #dbeafe;
+  --pattern-blue-border: #2563eb;
+  --pattern-purple: #9333ea;
+  --pattern-purple-bg: #f3e8ff;
+  --pattern-purple-border: #9333ea;
+  --pattern-red: #dc2626;
+  --pattern-red-bg: #fee2e2;
+  --pattern-red-border: #dc2626;
+  --pattern-yellow: #ca8a04;
+  --pattern-yellow-bg: #fef3c7;
+  --pattern-yellow-border: #ca8a04;
+  --pattern-orange: #ea580c;
+  --pattern-orange-bg: #fed7aa;
+  --pattern-orange-border: #ea580c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+.dark {
+  /* Dark theme colors */
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #0a0a0a;
+  --card-foreground: #fafafa;
+  --popover: #0a0a0a;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #0a0a0a;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fafafa;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #d4d4d8;
+  
+  /* Pattern demo colors - Dark theme */
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --error: #ef4444;
+  --error-foreground: #ffffff;
+  --info: #3b82f6;
+  --info-foreground: #ffffff;
+  
+  /* Pattern-specific colors - Dark theme */
+  --pattern-green: #22c55e;
+  --pattern-green-bg: rgba(34, 197, 94, 0.1);
+  --pattern-green-border: #16a34a;
+  --pattern-blue: #3b82f6;
+  --pattern-blue-bg: rgba(59, 130, 246, 0.1);
+  --pattern-blue-border: #2563eb;
+  --pattern-purple: #a855f7;
+  --pattern-purple-bg: rgba(168, 85, 247, 0.1);
+  --pattern-purple-border: #9333ea;
+  --pattern-red: #ef4444;
+  --pattern-red-bg: rgba(239, 68, 68, 0.1);
+  --pattern-red-border: #dc2626;
+  --pattern-yellow: #eab308;
+  --pattern-yellow-bg: rgba(234, 179, 8, 0.1);
+  --pattern-yellow-border: #ca8a04;
+  --pattern-orange: #f97316;
+  --pattern-orange-bg: rgba(249, 115, 22, 0.1);
+  --pattern-orange-border: #ea580c;
+}
+
+/* System preference detection */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #fafafa;
+    --card: #0a0a0a;
+    --card-foreground: #fafafa;
+    --popover: #0a0a0a;
+    --popover-foreground: #fafafa;
+    --primary: #fafafa;
+    --primary-foreground: #0a0a0a;
+    --secondary: #27272a;
+    --secondary-foreground: #fafafa;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --accent: #27272a;
+    --accent-foreground: #fafafa;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fafafa;
+    --border: #27272a;
+    --input: #27272a;
+    --ring: #d4d4d8;
+    
+    /* Pattern demo colors - Dark theme */
+    --success: #16a34a;
+    --success-foreground: #ffffff;
+    --warning: #f59e0b;
+    --warning-foreground: #ffffff;
+    --error: #ef4444;
+    --error-foreground: #ffffff;
+    --info: #3b82f6;
+    --info-foreground: #ffffff;
+    
+    /* Pattern-specific colors - Dark theme */
+    --pattern-green: #22c55e;
+    --pattern-green-bg: rgba(34, 197, 94, 0.1);
+    --pattern-green-border: #16a34a;
+    --pattern-blue: #3b82f6;
+    --pattern-blue-bg: rgba(59, 130, 246, 0.1);
+    --pattern-blue-border: #2563eb;
+    --pattern-purple: #a855f7;
+    --pattern-purple-bg: rgba(168, 85, 247, 0.1);
+    --pattern-purple-border: #9333ea;
+    --pattern-red: #ef4444;
+    --pattern-red-bg: rgba(239, 68, 68, 0.1);
+    --pattern-red-border: #dc2626;
+    --pattern-yellow: #eab308;
+    --pattern-yellow-bg: rgba(234, 179, 8, 0.1);
+    --pattern-yellow-border: #ca8a04;
+    --pattern-orange: #f97316;
+    --pattern-orange-bg: rgba(249, 115, 22, 0.1);
+    --pattern-orange-border: #ea580c;
   }
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Utility classes for pattern demos */
+.pattern-success {
+  background-color: var(--pattern-green-bg);
+  border-color: var(--pattern-green-border);
+  color: var(--pattern-green);
+}
+
+.pattern-info {
+  background-color: var(--pattern-blue-bg);
+  border-color: var(--pattern-blue-border);
+  color: var(--pattern-blue);
+}
+
+.pattern-warning {
+  background-color: var(--pattern-yellow-bg);
+  border-color: var(--pattern-yellow-border);
+  color: var(--pattern-yellow);
+}
+
+.pattern-error {
+  background-color: var(--pattern-red-bg);
+  border-color: var(--pattern-red-border);
+  color: var(--pattern-red);
 }

@@ -9,12 +9,17 @@ export default function PatternLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="p-6 max-w-2xl mx-auto">
-      <Link href="/" className="text-sm text-blue-600 hover:underline">
+    <main className="p-6 max-w-4xl mx-auto bg-background text-foreground">
+      <Link 
+        href="/" 
+        className="inline-flex items-center text-sm text-primary hover:text-primary/80 hover:underline transition-colors mb-4"
+      >
         ← Back to Home
       </Link>
-      <h1 className="text-2xl font-bold mt-2 mb-4">{title} Pattern</h1>
-      {children}
+      <h1 className="text-3xl font-bold mb-6 text-foreground">{title} Pattern</h1>
+      <div className="prose prose-zinc dark:prose-invert max-w-none">
+        {children}
+      </div>
     </main>
   );
 }

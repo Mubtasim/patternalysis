@@ -2,31 +2,6 @@
 import Link from "next/link";
 
 export default function Home() {
-  const implementedPatterns = [
-    "singleton",
-    "observer",
-    "factory-method",
-    "builder",
-    "prototype",
-    "adapter",
-    "bridge",
-    "decorator",
-    "composite",
-    "facade",
-    "flyweight",
-    "proxy",
-    "chain-of-responsibility",
-    "command",
-    "interpreter",
-    "iterator",
-    "mediator",
-    "memento",
-    "state",
-    "template-method",
-    "visitor",
-    "abstract-factory",
-    "strategy",
-  ];
 
   // Organize patterns by GoF categories
   const patternCategories = {
@@ -50,84 +25,54 @@ export default function Home() {
     }
   };
 
-  const getColorClasses = (color: string, isImplemented: boolean) => {
-    if (!isImplemented) {
-      return {
-        border: "border-zinc-800",
-        bg: "bg-zinc-900",
-        text: "text-zinc-500",
-        hover: ""
-      };
-    }
-
-    const colorMap = {
-      green: {
-        border: "border-green-700",
-        bg: "bg-green-900/20",
-        text: "text-white",
-        hover: "hover:border-green-500 hover:bg-green-900/30"
-      },
-      blue: {
-        border: "border-blue-700", 
-        bg: "bg-blue-900/20",
-        text: "text-white",
-        hover: "hover:border-blue-500 hover:bg-blue-900/30"
-      },
-      purple: {
-        border: "border-purple-700",
-        bg: "bg-purple-900/20", 
-        text: "text-white",
-        hover: "hover:border-purple-500 hover:bg-purple-900/30"
-      }
+  const getColorClasses = () => {
+    return {
+      border: "border-zinc-700",
+      bg: "bg-zinc-700",
+      text: "text-white",
+      hover: "hover:bg-zinc-600"
     };
-
-    return colorMap[color as keyof typeof colorMap];
   };
 
-  const getCategoryHeaderColor = (color: string) => {
-    const colorMap = {
-      green: "text-green-400 border-green-700",
-      blue: "text-blue-400 border-blue-700",
-      purple: "text-purple-400 border-purple-700"
-    };
-    return colorMap[color as keyof typeof colorMap];
+  const getCategoryHeaderColor = () => {
+    return "text-zinc-700 dark:text-zinc-400 border-zinc-700 dark:border-zinc-600";
   };
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-10">
+    <main className="min-h-screen bg-background text-foreground px-6 py-10">
       <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold mb-4 text-white tracking-tight">
+          <h1 className="text-6xl font-bold mb-4 text-foreground tracking-tight">
             Patternalysis
           </h1>
-          <p className="mb-6 text-zinc-400 text-xl max-w-3xl mx-auto leading-relaxed">
-            Master the <strong className="text-white">Gang of Four</strong> design patterns through 
-            <strong className="text-blue-400"> interactive demos</strong> and 
-            <strong className="text-red-400"> dramatic failure examples</strong> — 
+          <p className="mb-6 text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
+            Master the <strong className="text-foreground">Gang of Four</strong> design patterns through 
+            <strong className="text-blue-600 dark:text-blue-400"> interactive demos</strong> and 
+            <strong className="text-red-600 dark:text-red-400"> dramatic failure examples</strong> — 
             simplified for frontend engineers.
           </p>
 
           {/* Value Proposition */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
-            <div className="bg-zinc-900/50 p-6 rounded-lg border border-zinc-800">
+            <div className="bg-card p-6 rounded-lg border border-border">
               <div className="text-3xl mb-3">⚡</div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Interactive Demos</h3>
-              <p className="text-sm text-zinc-400">
+              <h3 className="text-lg font-semibold mb-2 text-card-foreground">Interactive Demos</h3>
+              <p className="text-sm text-muted-foreground">
                 See patterns in action with live, clickable examples that show exactly how they work
               </p>
             </div>
-            <div className="bg-zinc-900/50 p-6 rounded-lg border border-zinc-800">
+            <div className="bg-card p-6 rounded-lg border border-border">
               <div className="text-3xl mb-3">💥</div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Dramatic Failures</h3>
-              <p className="text-sm text-zinc-400">
+              <h3 className="text-lg font-semibold mb-2 text-card-foreground">Dramatic Failures</h3>
+              <p className="text-sm text-muted-foreground">
                 Watch anti-patterns break in real-time to understand why patterns matter
               </p>
             </div>
-            <div className="bg-zinc-900/50 p-6 rounded-lg border border-zinc-800">
+            <div className="bg-card p-6 rounded-lg border border-border">
               <div className="text-3xl mb-3">🎯</div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Real-World Focus</h3>
-              <p className="text-sm text-zinc-400">
+              <h3 className="text-lg font-semibold mb-2 text-card-foreground">Real-World Focus</h3>
+              <p className="text-sm text-muted-foreground">
                 Every example uses practical scenarios you&apos;ll encounter in modern development
               </p>
             </div>
@@ -160,12 +105,12 @@ export default function Home() {
           {/* Quick Stats */}
           <div className="flex justify-center gap-8 mt-8 text-sm">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400">23</div>
-              <div className="text-zinc-400">Total Patterns</div>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">23</div>
+              <div className="text-muted-foreground">Total Patterns</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-400">∞</div>
-              <div className="text-zinc-400">Learning Value</div>
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">∞</div>
+              <div className="text-muted-foreground">Learning Value</div>
             </div>
           </div>
         </div>
@@ -175,33 +120,25 @@ export default function Home() {
           {Object.entries(patternCategories).map(([key, category]) => (
             <div key={key} className="text-left">
               {/* Category Header */}
-              <div className={`mb-4 pb-2 border-b ${getCategoryHeaderColor(category.color)}`}>
+              <div className={`mb-4 pb-2 border-b ${getCategoryHeaderColor()}`}>
                 <h2 className="text-2xl font-bold mb-1">{category.title}</h2>
-                <p className="text-sm text-zinc-400">{category.description}</p>
+                <p className="text-sm text-muted-foreground">{category.description}</p>
               </div>
 
               {/* Pattern Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {category.patterns.map((name) => {
-                  const isImplemented = implementedPatterns.includes(name);
                   const label = name.replace(/-/g, " ");
-                  const colors = getColorClasses(category.color, isImplemented);
+                  const colors = getColorClasses();
 
-                  return isImplemented ? (
+                  return (
                     <Link
                       key={name}
                       href={`/patterns/${name}`}
-                      className={`block p-4 h-20 flex items-center justify-center rounded-lg border ${colors.border} ${colors.bg} ${colors.text} ${colors.hover} transition-all text-base font-medium tracking-wide capitalize`}
+                      className={`block p-4 h-20 flex items-center justify-center rounded-lg border ${colors.border} ${colors.bg} ${colors.text} ${colors.hover} transition-all text-base font-bold tracking-wide capitalize shadow-sm`}
                     >
                       {label}
                     </Link>
-                  ) : (
-                    <div
-                      key={name}
-                      className={`p-4 h-20 flex items-center justify-center rounded-lg border ${colors.border} ${colors.bg} ${colors.text} cursor-not-allowed text-base font-medium tracking-wide gap-1 capitalize`}
-                    >
-                      {label} <span className="text-sm">(upcoming)</span>
-                    </div>
                   );
                 })}
               </div>
