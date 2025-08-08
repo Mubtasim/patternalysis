@@ -105,7 +105,7 @@ export default function MementoPatternPage() {
         </button>
       </div>
 
-      <div className="bg-zinc-900 text-white p-4 rounded mb-6 border border-zinc-800 min-h-[50px]">
+      <div className="bg-card text-foreground p-4 rounded mb-6 border border-border min-h-[50px]">
         {content}
       </div>
 

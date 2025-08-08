@@ -102,13 +102,13 @@ export default function SingletonPage() {
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Interactive Demo: Singleton vs Regular Class</h2>
-      <p className="mb-4 text-zinc-400">
+      <p className="mb-4 text-muted-foreground">
         Click the buttons below to see the difference between Singleton and regular class instantiation:
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {/* Singleton Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-green-400">🔒 Singleton Pattern</h3>
           <button
             className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded mb-3 w-full"
@@ -120,14 +120,14 @@ export default function SingletonPage() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span>Instances Created:</span>
-              <span className="font-mono bg-zinc-800 px-2 py-1 rounded text-green-400">
+              <span className="font-mono bg-secondary border border-border px-2 py-1 rounded text-green-700 dark:text-green-400">
                 {singletonCount}
               </span>
             </div>
             {singletonId && (
               <div className="break-all">
                 <span className="block">Instance ID:</span>
-                <span className="font-mono text-xs bg-zinc-800 p-2 rounded block text-green-400">
+                <span className="font-mono text-xs bg-secondary border border-border p-2 rounded block text-green-700 dark:text-green-400">
                   {singletonId}
                 </span>
               </div>
@@ -136,7 +136,7 @@ export default function SingletonPage() {
         </div>
 
         {/* Regular Class Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-red-400">🔓 Regular Class</h3>
           <button
             className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded mb-3 w-full"
@@ -148,7 +148,7 @@ export default function SingletonPage() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span>Instances Created:</span>
-              <span className="font-mono bg-zinc-800 px-2 py-1 rounded text-red-400">
+              <span className="font-mono bg-secondary border border-border px-2 py-1 rounded text-red-700 dark:text-red-400">
                 {regularCount}
               </span>
             </div>
@@ -157,7 +157,7 @@ export default function SingletonPage() {
                 <span className="block mb-1">Recent Instance IDs:</span>
                 <div className="space-y-1">
                   {regularIds.map((id) => (
-                    <span key={id} className="font-mono text-xs bg-zinc-800 p-1 rounded block text-red-400">
+                    <span key={id} className="font-mono text-xs bg-secondary border border-border p-1 rounded block text-red-700 dark:text-red-400">
                       {id}
                     </span>
                   ))}
@@ -168,9 +168,9 @@ export default function SingletonPage() {
         </div>
       </div>
 
-      <div className="mb-6 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
-        <h4 className="font-semibold mb-2 text-blue-300">💡 Notice the Difference:</h4>
-        <ul className="text-sm space-y-1 text-blue-200">
+      <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+        <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-300">💡 Notice the Difference:</h4>
+        <ul className="text-sm space-y-1 text-blue-700 dark:text-blue-200">
           <li>• <strong>Singleton</strong>: Always returns the same instance (same ID, count stays low)</li>
           <li>• <strong>Regular Class</strong>: Creates new instances every time (different IDs, count increases)</li>
         </ul>

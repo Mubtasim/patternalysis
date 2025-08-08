@@ -279,12 +279,12 @@ export default function StrategyPatternPage() {
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Interactive Demo: Strategy vs Hardcoded Logic</h2>
-      <p className="mb-4 text-zinc-400">
+      <p className="mb-4 text-muted-foreground">
         Test a discount system. Watch what happens when a NEW discount type (Flash Sale) is needed:
       </p>
 
-      <div className="mb-4 p-3 bg-zinc-800 rounded border border-zinc-600">
-        <h4 className="font-semibold mb-2 text-zinc-300">Shopping Scenario:</h4>
+      <div className="mb-4 p-3 bg-secondary rounded border border-border">
+        <h4 className="font-semibold mb-2 text-muted-foreground">Shopping Scenario:</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>📦 <strong>Purchase Amount:</strong> ${purchaseAmount}</div>
           <div>🎓 <strong>VIP Membership:</strong> {membershipYears} years</div>
@@ -294,7 +294,7 @@ export default function StrategyPatternPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Strategy Pattern Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-green-400">⚡ Strategy Pattern</h3>
           
           <div className="grid grid-cols-2 gap-2 mb-3">
@@ -327,20 +327,20 @@ export default function StrategyPatternPage() {
           
           <div>
             <span className="block mb-1 text-sm">Activity Log:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[140px] max-h-[140px] overflow-y-auto">
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[140px] max-h-[140px] overflow-y-auto">
               {strategyLogs.length > 0 ? (
                 strategyLogs.map((log, idx) => (
-                  <div key={idx} className="mb-1 break-all text-green-300">{log}</div>
+                  <div key={idx} className="mb-1 break-all text-green-700 dark:text-green-300">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">Try the discount buttons above...</div>
+                <div className="text-muted-foreground">Try the discount buttons above...</div>
               )}
             </div>
           </div>
         </div>
 
         {/* Hardcoded Logic Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-red-400">🔀 Hardcoded Logic</h3>
           
           <div className="grid grid-cols-2 gap-2 mb-3">
@@ -362,26 +362,18 @@ export default function StrategyPatternPage() {
             >
               VIP (25%+)
             </button>
-            <button
-              onClick={() => handleHardcodedDiscount("flash")}
-              className="bg-red-800 hover:bg-red-700 text-white px-3 py-2 rounded text-sm border-2 border-red-400 relative opacity-75"
-            >
-              <span className="absolute -top-1 -right-1 bg-red-400 text-black text-xs px-1 rounded">💥</span>
-              Flash Sale
-            </button>
+            {/* Missing flash sale on purpose */}
           </div>
-          
+ 
           <div>
             <span className="block mb-1 text-sm">Activity Log:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[140px] max-h-[140px] overflow-y-auto">
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[140px] max-h-[140px] overflow-y-auto">
               {hardcodedLogs.length > 0 ? (
                 hardcodedLogs.map((log, idx) => (
-                  <div key={idx} className={`mb-1 break-all ${log.includes('ERROR') ? 'text-red-400' : 'text-red-300'}`}>
-                    {log}
-                  </div>
+                  <div key={idx} className="mb-1 break-all text-red-700 dark:text-red-300">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">Try the discount buttons above...</div>
+                <div className="text-muted-foreground">Try the buttons above...</div>
               )}
             </div>
           </div>

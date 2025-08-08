@@ -355,13 +355,13 @@ export default function BuilderPage() {
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Interactive Demo: Builder vs Constructor Parameter Explosion</h2>
-      <p className="mb-4 text-zinc-400">
+      <p className="mb-4 text-muted-foreground">
         Build a custom computer. See how Builder stays clear while constructor parameters become unmanageable:
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Builder Pattern Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-green-400">🔧 Builder Pattern</h3>
           
           <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
@@ -412,20 +412,20 @@ export default function BuilderPage() {
           
           <div>
             <span className="block mb-1 text-sm">Build Process:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
               {builderLogs.length > 0 ? (
                 builderLogs.map((log, idx) => (
-                  <div key={idx} className="mb-1 break-all text-green-300">{log}</div>
+                  <div key={idx} className="mb-1 break-all text-green-700 dark:text-green-300">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">Click buttons above to configure computer...</div>
+                <div className="text-muted-foreground">Click buttons above to configure computer...</div>
               )}
             </div>
           </div>
         </div>
 
         {/* Hardcoded Constructor Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-red-400">💥 Constructor Parameters</h3>
           
           <div className="grid grid-cols-1 gap-2 mb-3">
@@ -439,7 +439,7 @@ export default function BuilderPage() {
               onClick={handleHardcodedBudget}
               className="bg-red-700 hover:bg-red-600 text-white px-3 py-2 rounded text-sm border-2 border-red-400"
             >
-              Budget PC (Wrong Parameter Order!) 💥
+              Budget PC (Oops Bug!)
             </button>
           </div>
           
@@ -450,16 +450,14 @@ export default function BuilderPage() {
           </div>
           
           <div>
-            <span className="block mb-1 text-sm">Build Process:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
+            <span className="block mb-1 text-sm">Constructor Calls:</span>
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
               {hardcodedLogs.length > 0 ? (
                 hardcodedLogs.map((log, idx) => (
-                  <div key={idx} className={`mb-1 break-all ${log.includes('💥') || log.includes('😵') ? 'text-red-400' : 'text-red-300'}`}>
-                    {log}
-                  </div>
+                  <div key={idx} className="mb-1 break-all text-red-700 dark:text-red-300">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">Try the preset configurations above...</div>
+                <div className="text-muted-foreground">Click buttons above to simulate constructor calls...</div>
               )}
             </div>
           </div>

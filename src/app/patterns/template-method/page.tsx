@@ -84,7 +84,7 @@ export default function TemplateMethodPage() {
         </button>
       </div>
 
-      <div className="bg-zinc-900 p-4 text-white text-sm rounded mb-6 border border-zinc-800 min-h-[50px]">
+      <div className="bg-card p-4 text-foreground text-sm rounded mb-6 border border-border min-h-[50px]">
         {logs.map((log, idx) => (
           <div key={idx}>{log}</div>
         ))}

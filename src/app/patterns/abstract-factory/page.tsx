@@ -96,7 +96,7 @@ export default function AbstractFactoryPage() {
         <select
           value={theme}
           onChange={(e) => setTheme(e.target.value as "light" | "dark")}
-          className="bg-zinc-800 text-white px-3 py-1 rounded"
+          className="bg-secondary text-foreground border border-border px-3 py-1 rounded"
         >
           <option value="light">Light Theme</option>
           <option value="dark">Dark Theme</option>
@@ -109,7 +109,7 @@ export default function AbstractFactoryPage() {
         </button>
       </div>
 
-      <div className="bg-zinc-900 p-4 text-white text-sm rounded mb-6 border border-zinc-800 min-h-[50px]">
+      <div className="bg-card p-4 text-foreground text-sm rounded mb-6 border border-border min-h-[50px]">
         {log.map((item, idx) => (
           <div key={idx}>{item}</div>
         ))}

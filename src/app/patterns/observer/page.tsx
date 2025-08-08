@@ -303,19 +303,19 @@ export default function ObserverPage() {
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Demo: The Notification Distribution Problem</h2>
-      <p className="mb-4 text-zinc-400">
+      <p className="mb-4 text-muted-foreground">
         You need to notify Email, SMS, Push, and Slack services when events happen. 
         Watch what happens when you add services and publish events:
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Observer Pattern Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-green-400">👀 Observer Pattern</h3>
-          <p className="text-xs text-green-300 mb-3">Automatic notification to ALL subscribers</p>
+          <p className="text-xs mb-3 text-green-700 dark:text-green-300">Automatic notification to ALL subscribers</p>
           
           <div className="mb-3">
-            <div className="text-xs text-zinc-400 mb-2">Add Notification Services:</div>
+            <div className="text-xs text-muted-foreground mb-2">Add Notification Services:</div>
             <div className="grid grid-cols-2 gap-1">
               {serviceTypes.map(service => (
                 <button
@@ -330,18 +330,18 @@ export default function ObserverPage() {
           </div>
 
           <div className="mb-3">
-            <div className="text-xs text-zinc-400 mb-2">Active Subscribers ({observerSubscribers.length}):</div>
-            <div className="text-xs bg-zinc-800 p-2 rounded min-h-[30px]">
+            <div className="text-xs text-muted-foreground mb-2">Active Subscribers ({observerSubscribers.length}):</div>
+            <div className="text-xs bg-secondary border border-border p-2 rounded min-h-[30px]">
               {observerSubscribers.length > 0 ? (
                 observerSubscribers.map(sub => `${sub.type}`).join(', ')
               ) : (
-                <span className="text-zinc-500">No subscribers yet...</span>
+                <span className="text-muted-foreground">No subscribers yet...</span>
               )}
             </div>
           </div>
 
           <div className="mb-3">
-            <div className="text-xs text-zinc-400 mb-2">Publish Events:</div>
+            <div className="text-xs text-muted-foreground mb-2">Publish Events:</div>
             <div className="grid grid-cols-1 gap-1">
               {events.slice(0, 2).map(event => (
                 <button
@@ -356,26 +356,26 @@ export default function ObserverPage() {
           </div>
           
           <div>
-            <span className="block mb-1 text-xs text-zinc-400">Event Log:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
+            <span className="block mb-1 text-xs text-muted-foreground">Event Log:</span>
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
               {observerLogs.length > 0 ? (
                 observerLogs.map((log, idx) => (
                   <div key={idx} className="mb-1 break-all">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">No activity yet...</div>
+                <div className="text-muted-foreground">No activity yet...</div>
               )}
             </div>
           </div>
         </div>
 
         {/* Manual Notification Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-red-400">📧 Manual Notification</h3>
-          <p className="text-xs text-red-300 mb-3">Hardcoded logic - misses notifications!</p>
+          <p className="text-xs mb-3 text-red-700 dark:text-red-300">Hardcoded logic - misses notifications!</p>
           
           <div className="mb-3">
-            <div className="text-xs text-zinc-400 mb-2">Add Notification Services:</div>
+            <div className="text-xs text-muted-foreground mb-2">Add Notification Services:</div>
             <div className="grid grid-cols-2 gap-1">
               {serviceTypes.map(service => (
                 <button
@@ -394,18 +394,18 @@ export default function ObserverPage() {
           </div>
 
           <div className="mb-3">
-            <div className="text-xs text-zinc-400 mb-2">Active Services ({manualSubscribers.length}):</div>
-            <div className="text-xs bg-zinc-800 p-2 rounded min-h-[30px]">
+            <div className="text-xs text-muted-foreground mb-2">Active Services ({manualSubscribers.length}):</div>
+            <div className="text-xs bg-secondary border border-border p-2 rounded min-h-[30px]">
               {manualSubscribers.length > 0 ? (
                 manualSubscribers.join(', ')
               ) : (
-                <span className="text-zinc-500">No services yet...</span>
+                <span className="text-muted-foreground">No services yet...</span>
               )}
             </div>
           </div>
 
           <div className="mb-3">
-            <div className="text-xs text-zinc-400 mb-2">Publish Events:</div>
+            <div className="text-xs text-muted-foreground mb-2">Publish Events:</div>
             <div className="grid grid-cols-1 gap-1">
               {events.slice(0, 2).map(event => (
                 <button
@@ -420,14 +420,14 @@ export default function ObserverPage() {
           </div>
           
           <div>
-            <span className="block mb-1 text-xs text-zinc-400">Event Log:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
+            <span className="block mb-1 text-xs text-muted-foreground">Event Log:</span>
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[120px] max-h-[120px] overflow-y-auto">
               {manualLogs.length > 0 ? (
                 manualLogs.map((log, idx) => (
                   <div key={idx} className="mb-1 break-all">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">No activity yet...</div>
+                <div className="text-muted-foreground">No activity yet...</div>
               )}
             </div>
           </div>

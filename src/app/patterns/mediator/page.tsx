@@ -100,7 +100,7 @@ export default function MediatorPatternPage() {
         Simulate Chat
       </button>
 
-      <div className="bg-zinc-900 p-4 rounded text-sm mb-6 border border-zinc-800">
+      <div className="bg-card p-4 rounded text-sm mb-6 border border-border">
         {messages.map((msg, idx) => (
           <div key={idx}>{msg}</div>
         ))}

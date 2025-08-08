@@ -88,38 +88,38 @@ function processSubscription(amount, provider) {
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">The Problem: API Integration Complexity</h2>
-      <p className="mb-6 text-zinc-400">
+      <p className="mb-6 text-muted-foreground">
         Your app needs to process payments, but each provider has a completely different API format. 
         The **Adapter Pattern** organizes this complexity cleanly, while **Direct Integration** scatters it everywhere, creating a maintenance nightmare.
       </p>
 
       {/* Complexity Analysis */}
       <h2 className="text-xl font-semibold mt-6 mb-4">🔍 Why Direct Integration Gets Complex</h2>
-      <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+      <div className="bg-card border border-border rounded-lg p-6 mb-6">
         <h4 className="text-lg font-semibold mb-4 text-yellow-300">The Real Problem: Scattered Complexity</h4>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-green-900/20 border border-green-700 rounded p-4">
-            <h5 className="font-semibold text-green-300 mb-2">✅ With Adapter Pattern:</h5>
-            <div className="text-sm text-green-200 space-y-2">
+          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded p-4">
+            <h5 className="font-semibold text-green-800 dark:text-green-300 mb-2">✅ With Adapter Pattern:</h5>
+            <div className="text-sm text-green-700 dark:text-green-200 space-y-2">
               <div>📁 <strong>PaymentService.js</strong> - Clean interface only</div>
               <div>📁 <strong>OrderService.js</strong> - Clean interface only</div>
               <div>📁 <strong>RefundService.js</strong> - Clean interface only</div>
               <div>📁 <strong>ReportingService.js</strong> - Clean interface only</div>
-              <div className="pt-2 border-t border-green-700">
+              <div className="pt-2 border-t border-green-200 dark:border-green-700">
                 <div>📁 <strong>StripeAdapter.js</strong> - All Stripe complexity here</div>
                 <div>📁 <strong>PayPalAdapter.js</strong> - All PayPal complexity here</div>
                 <div>📁 <strong>BitcoinAdapter.js</strong> - All Bitcoin complexity here</div>
               </div>
-              <div className="pt-2 text-green-400 font-semibold">
+              <div className="pt-2 text-green-700 dark:text-green-400 font-semibold">
                 🎯 Result: Complexity isolated, easy to maintain!
               </div>
             </div>
           </div>
 
-          <div className="bg-red-900/20 border border-red-700 rounded p-4">
-            <h5 className="font-semibold text-red-300 mb-2">💀 With Direct Integration:</h5>
-            <div className="text-sm text-red-200 space-y-2">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded p-4">
+            <h5 className="font-semibold text-red-800 dark:text-red-300 mb-2">💀 With Direct Integration:</h5>
+            <div className="text-sm text-red-700 dark:text-red-200 space-y-2">
               <div>📁 <strong>PaymentService.js</strong> - Stripe + PayPal + Square + Bitcoin logic</div>
               <div>📁 <strong>OrderService.js</strong> - Stripe + PayPal + Square + Bitcoin logic</div>
               <div>📁 <strong>RefundService.js</strong> - Stripe + PayPal + Square + Bitcoin logic</div>
@@ -128,8 +128,8 @@ function processSubscription(amount, provider) {
               <div>📁 <strong>InvoiceService.js</strong> - Stripe + PayPal + Square + Bitcoin logic</div>
               <div>📁 <strong>AnalyticsService.js</strong> - Stripe + PayPal + Square + Bitcoin logic</div>
               <div>📁 <strong>...and 15+ more files</strong> - Same duplicated logic everywhere!</div>
-              <div className="pt-2 text-red-400 font-semibold">
-                💥 Result: Complexity scattered everywhere, maintenance nightmare!
+              <div className="pt-2 text-red-700 dark:text-red-400 font-semibold">
+                �� Result: Complexity scattered everywhere, maintenance nightmare!
               </div>
             </div>
           </div>
@@ -138,18 +138,18 @@ function processSubscription(amount, provider) {
 
       {/* Scattered Code Examples */}
       <h2 className="text-xl font-semibold mt-6 mb-4">📁 The Scattered Code Problem</h2>
-      <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-6">
+      <div className="bg-card border border-border rounded-lg p-6 mb-6">
         <h4 className="text-lg font-semibold mb-4 text-purple-300">Duplicated Logic Everywhere</h4>
-        <p className="text-sm text-zinc-400 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           This is why Direct Integration becomes a maintenance nightmare. The same conversion logic gets duplicated in every file that handles payments:
         </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {scatteredCodeFiles.map((file, index) => (
-            <div key={index} className="bg-red-900/20 border border-red-700 rounded p-4">
+            <div key={index} className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded p-4">
               <div className="mb-2">
-                <h5 className="font-semibold text-red-300">{file.file}</h5>
-                <span className="text-xs text-red-400">{file.problem}</span>
+                <h5 className="font-semibold text-red-800 dark:text-red-300">{file.file}</h5>
+                <span className="text-xs text-red-700 dark:text-red-400">{file.problem}</span>
               </div>
               <SyntaxHighlighter 
                 language="javascript" 
@@ -163,9 +163,9 @@ function processSubscription(amount, provider) {
           ))}
         </div>
         
-        <div className="mt-4 p-4 bg-red-800/30 rounded">
-          <h5 className="font-semibold text-red-300 mb-2">💥 The Problem:</h5>
-          <ul className="text-sm text-red-200 space-y-1">
+        <div className="mt-4 p-4 bg-red-50 dark:bg-red-800/30 border border-red-200 dark:border-red-700 rounded">
+          <h5 className="font-semibold text-red-800 dark:text-red-300 mb-2">💥 The Problem:</h5>
+          <ul className="text-sm text-red-700 dark:text-red-200 space-y-1">
             <li>• Same conversion logic duplicated in 20+ files</li>
             <li>• Add new provider? Update every single file manually</li>
             <li>• Bug in conversion logic? Fix it in 20+ places</li>

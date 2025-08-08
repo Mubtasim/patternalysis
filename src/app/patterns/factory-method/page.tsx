@@ -205,19 +205,19 @@ export default function FactoryMethodPage() {
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Demo: The Extensibility Problem</h2>
-      <p className="mb-4 text-zinc-400">
+      <p className="mb-4 text-muted-foreground">
         Imagine you built an app in **v1.0** with Circle and Square. Now in **v2.0**, you need Triangle and Star. 
         Watch what happens to each approach:
       </p>
 
-      <div className="mb-4 p-3 bg-zinc-800 rounded border border-zinc-600">
-        <h4 className="font-semibold mb-2 text-zinc-300">Settings:</h4>
+      <div className="mb-4 p-3 bg-secondary rounded border border-border">
+        <h4 className="font-semibold mb-2 text-muted-foreground">Settings:</h4>
         <div className="flex items-center gap-4">
           <label className="text-sm">Color:</label>
           <select 
             value={selectedColor} 
             onChange={(e) => setSelectedColor(e.target.value)}
-            className="bg-zinc-700 text-white px-2 py-1 rounded text-sm"
+            className="bg-secondary text-foreground border border-border px-2 py-1 rounded text-sm"
           >
             {colors.map(color => (
               <option key={color} value={color}>{color}</option>
@@ -228,9 +228,9 @@ export default function FactoryMethodPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Factory Method Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-green-400">🏭 Factory Method (v2.0)</h3>
-          <p className="text-xs text-green-300 mb-3">Supports all shapes gracefully</p>
+          <p className="text-xs mb-3 text-green-700 dark:text-green-300">Supports all shapes gracefully</p>
           
           <div className="grid grid-cols-2 gap-2 mb-3">
             {allShapes.map(shape => (
@@ -244,31 +244,31 @@ export default function FactoryMethodPage() {
             ))}
           </div>
           
-          <div className="mb-3 p-2 bg-zinc-800 rounded">
-            <div className="text-xs text-zinc-400 mb-1">Result:</div>
-            <div className="text-sm text-white min-h-[20px]">
+          <div className="mb-3 p-2 bg-secondary border border-border rounded">
+            <div className="text-xs text-muted-foreground mb-1">Result:</div>
+            <div className="text-sm text-foreground min-h-[20px]">
               {factoryResult || "Click a button to create shapes..."}
             </div>
           </div>
           
           <div>
-            <span className="block mb-1 text-xs text-zinc-400">Creation Log:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[100px] max-h-[100px] overflow-y-auto">
+            <span className="block mb-1 text-xs text-muted-foreground">Creation Log:</span>
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[100px] max-h-[100px] overflow-y-auto">
               {factoryLogs.length > 0 ? (
                 factoryLogs.map((log, idx) => (
                   <div key={idx} className="mb-1">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">No activity yet...</div>
+                <div className="text-muted-foreground">No activity yet...</div>
               )}
             </div>
           </div>
         </div>
 
         {/* Direct Instantiation Demo */}
-        <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+        <div className="bg-card p-4 rounded-lg border border-border">
           <h3 className="text-lg font-semibold mb-3 text-red-400">🔧 Direct Instantiation (v1.0)</h3>
-          <p className="text-xs text-red-300 mb-3">Old hardcoded logic - breaks with new shapes!</p>
+          <p className="text-xs mb-3 text-red-700 dark:text-red-300">Old hardcoded logic - breaks with new shapes!</p>
           
           <div className="grid grid-cols-2 gap-2 mb-3">
             {allShapes.map(shape => {
@@ -289,22 +289,22 @@ export default function FactoryMethodPage() {
             })}
           </div>
           
-          <div className="mb-3 p-2 bg-zinc-800 rounded">
-            <div className="text-xs text-zinc-400 mb-1">Result:</div>
-            <div className="text-sm text-white min-h-[20px]">
+          <div className="mb-3 p-2 bg-secondary border border-border rounded">
+            <div className="text-xs text-muted-foreground mb-1">Result:</div>
+            <div className="text-sm text-foreground min-h-[20px]">
               {directResult || "Click a button to create shapes..."}
             </div>
           </div>
           
           <div>
-            <span className="block mb-1 text-xs text-zinc-400">Creation Log:</span>
-            <div className="bg-zinc-800 p-2 rounded text-xs font-mono min-h-[100px] max-h-[100px] overflow-y-auto">
+            <span className="block mb-1 text-xs text-muted-foreground">Creation Log:</span>
+            <div className="bg-secondary border border-border p-2 rounded text-xs font-mono min-h-[100px] max-h-[100px] overflow-y-auto">
               {directLogs.length > 0 ? (
                 directLogs.map((log, idx) => (
                   <div key={idx} className="mb-1">{log}</div>
                 ))
               ) : (
-                <div className="text-zinc-500">No activity yet...</div>
+                <div className="text-muted-foreground">No activity yet...</div>
               )}
             </div>
           </div>

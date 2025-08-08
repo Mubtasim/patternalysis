@@ -90,7 +90,7 @@ export default function CompositePage() {
       </button>
 
       {output && (
-        <pre className="bg-zinc-900 text-green-400 p-4 rounded border border-zinc-700 whitespace-pre-wrap">
+        <pre className="bg-card text-green-700 dark:text-green-300 p-4 rounded border border-border whitespace-pre-wrap">
           {output}
         </pre>
       )}

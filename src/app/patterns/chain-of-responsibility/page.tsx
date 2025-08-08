@@ -110,7 +110,7 @@ export default function ChainOfResponsibilityPage() {
         </button>
       </div>
 
-      <div className="bg-zinc-900 rounded p-4 mb-6 h-48 overflow-y-auto text-sm border border-zinc-800">
+      <div className="bg-card rounded p-4 mb-6 h-48 overflow-y-auto text-sm border border-border">
         {logs.map((log, idx) => (
           <div key={idx}>{log}</div>
         ))}
